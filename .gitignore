@@ -1,0 +1,10 @@
+data/**
+**/__pycache__/
+
+
+venv/
+outputs/
+
+epoch**
+
+models/

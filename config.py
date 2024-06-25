@@ -8,12 +8,12 @@ print(f"using device: {DEVICE}")
 TRAIN_DIR = "data/train"
 VAL_DIR = "data/val"
 BATCH_SIZE = 1
-LEARNING_RATE = 1e-5
-LAMBDA_IDENTITY = 0.0 # loss weight for identity loss
+LEARNING_RATE = 1e-4
+LAMBDA_IDENTITY = 5.0 # loss weight for identity loss
 LAMBDA_CYCLE = 10
 NUM_WORKERS = 4
-NUM_EPOCHS = 2
-LOAD_MODEL = True
+NUM_EPOCHS = 200
+LOAD_MODEL = False
 SAVE_MODEL = True
 CHECKPOINT_GENERATOR_H = "models/genh.pth.tar"
 CHECKPOINT_GENERATOR_Z = "models/genz.pth.tar"

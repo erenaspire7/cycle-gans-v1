@@ -1,7 +1,7 @@
 import torch
 from tqdm import tqdm
 from torchvision.utils import save_image
-from config import DEVICE, LAMBDA_CYCLE
+from config import DEVICE, LAMBDA_CYCLE, LAMBDA_IDENTITY
 from helper.image_helper import save_image_v2
 import numpy as np
 
@@ -57,10 +57,10 @@ def train_fn(
             cycle_statue_loss = l1(statue, cycle_statue)
 
             # identity losses
-            # identity_zebra = gen_Z(zebra)
-            # identity_horse = gen_H(horse)
-            # identity_zebra_loss = l1(zebra, identity_zebra)
-            # identity_horse_loss = l1(horse, identity_horse)
+            identity_human = gen_Z(human)
+            identity_statue = gen_H(statue)
+            identity_human_loss = l1(human, identity_human)
+            identity_statue_loss = l1(statue, identity_statue)
 
             # total loss
             G_loss = (
@@ -68,8 +68,8 @@ def train_fn(
                 + loss_G_H
                 + cycle_human_loss * LAMBDA_CYCLE
                 + cycle_statue_loss * LAMBDA_CYCLE
-                # + identity_horse_loss * LAMBDA_IDENTITY
-                # + identity_zebra_loss * LAMBDA_IDENTITY
+                + identity_human_loss * LAMBDA_IDENTITY
+                + identity_statue_loss * LAMBDA_IDENTITY
             )
 
         opt_gen.zero_grad()
@@ -94,6 +94,8 @@ def train_fn(
                 "Human to Statue",
                 f"outputs/human_{idx}.png",
             )
+
+            print(f"Total Loss: {G_loss}")
 
             # save_image(fake_statue * 0.5 + 0.5, f"outputs/statue_{idx}.png")
             # save_image(fake_human * 0.5 + 0.5, f"outputs/human_{idx}.png")
